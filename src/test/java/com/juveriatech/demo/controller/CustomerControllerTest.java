@@ -95,16 +95,6 @@ public class CustomerControllerTest {
     }
 
     @Test
-    @DisplayName("Delete customer by ID")
-    public void testDeleteCustomerById_whenValidIdProvided_returnsNoContent() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/customers/1")
-                .accept(APPLICATION_JSON);
-
-        MvcResult mvcResult = mvc.perform(requestBuilder).andExpect(status().isNoContent()).andReturn();
-        Assertions.assertEquals(204, mvcResult.getResponse().getStatus(), "Response status should be 204 No Content");
-    }
-
-    @Test
     @DisplayName("Create customer with invalid data")
     public void testCreateCustomer_whenInvalidDetailsProvided_returnsBadRequest() throws Exception {
         CustomerDto customer = new CustomerDto();

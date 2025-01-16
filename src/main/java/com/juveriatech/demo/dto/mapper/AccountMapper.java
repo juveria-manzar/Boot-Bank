@@ -11,6 +11,14 @@ public class AccountMapper {
             return null;
         }
 
+        if(account.getCustomer()==null){
+            return new AccountDto(
+                    account.getId(),
+                    account.getAccountNumber(),
+                    account.getBalance(),
+                    null
+            );
+        }
 
         return new AccountDto(
                 account.getId(),

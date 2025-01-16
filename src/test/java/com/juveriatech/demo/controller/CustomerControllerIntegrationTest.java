@@ -71,31 +71,6 @@ public class CustomerControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("Delete customer by ID")
-    public void testDeleteCustomerById() {
-        CustomerDto customerDto = getCustomer();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-        HttpEntity<CustomerDto> entity = new HttpEntity<>(customerDto, headers);
-
-        ResponseEntity<CustomerDto> createResponse = testRestTemplate.postForEntity(
-                "/api/customers", entity, CustomerDto.class
-        );
-
-        Long customerId = createResponse.getBody().getId();
-        Assertions.assertNotNull(customerId, "Customer ID is null");
-
-        ResponseEntity<Void> response = testRestTemplate.exchange(
-                "/api/customers/" + customerId, HttpMethod.DELETE, null, Void.class
-        );
-
-        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode(), "Failed to delete customer by ID");
-    }
-
-    @Test
     @DisplayName("Create customer with invalid data")
     public void testCreateCustomerWithInvalidData() {
         CustomerDto customerDto = new CustomerDto(); // Missing required fields

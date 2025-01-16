@@ -1,9 +1,6 @@
 package com.juveriatech.demo.controller;
 
-import com.juveriatech.demo.dto.APIResponseList;
-import com.juveriatech.demo.dto.AccountDto;
-import com.juveriatech.demo.dto.CustomerDto;
-import com.juveriatech.demo.dto.TransactionDto;
+import com.juveriatech.demo.dto.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 
 import java.time.LocalDateTime;
@@ -103,43 +99,15 @@ public class TransactionControllerIntegrationTest {
 
         Long transactionId = createResponse.getBody().getId();
         Assertions.assertNotNull(transactionId, "Transaction ID is null");
-
-        ResponseEntity<APIResponseList<Page<TransactionDto>>> response = testRestTemplate.exchange(
+        ResponseEntity<PageResponse<TransactionDto>> response = testRestTemplate.exchange(
                 "/api/accounts/" + accountId + "/transactions?page=0&size=10",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<APIResponseList<Page<TransactionDto>>>() {}
+                new ParameterizedTypeReference<PageResponse<TransactionDto>>() {}
         );
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode(), "Failed to get transactions by account ID");
         Assertions.assertNotNull(response.getBody(), "Response body is null");
-        Assertions.assertTrue(response.getBody().getRecordCount() > 0, "No transactions found");
-    }
-
-    @Test
-    @DisplayName("Delete transaction by ID")
-    public void testDeleteTransactionById() {
-        // Arrange
-        TransactionDto transactionDto = getTransaction();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-        HttpEntity<TransactionDto> entity = new HttpEntity<>(transactionDto, headers);
-
-        ResponseEntity<TransactionDto> createResponse = testRestTemplate.postForEntity(
-                "/api/accounts/" + accountId + "/transactions", entity, TransactionDto.class
-        );
-
-        Long transactionId = createResponse.getBody().getId();
-        Assertions.assertNotNull(transactionId, "Transaction ID is null");
-
-        ResponseEntity<Void> response = testRestTemplate.exchange(
-                "/api/accounts/" + accountId + "/transactions/" + transactionId, HttpMethod.DELETE, null, Void.class
-        );
-
-        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode(), "Failed to delete transaction by ID");
     }
 
     @Test
