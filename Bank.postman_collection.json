@@ -1,0 +1,104 @@
+{
+  "info": {
+    "_postman_id": "b3d6c3d0-fee7-4738-a506-8211a1cd19a0",
+    "name": "Bank",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "10685182"
+  },
+  "item": [
+    {
+      "name": "Create Customer",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\":\"Juveria\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "http://localhost:8080/api/customers"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Customer",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8080/api/customers/1"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Account",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8080/api/accounts"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Account",
+      "request": {
+        "method": "POST",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Get Transactions for Acct",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/accounts/1/transactions?page=0&size=10",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "accounts",
+            "1",
+            "transactions"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Transaction",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"amount\": 1,\n    \"mode\": \"CREDIT\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "http://localhost:8080/api/accounts/1/transactions"
+      },
+      "response": []
+    }
+  ]
+}
